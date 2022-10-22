@@ -35,6 +35,13 @@ int main(){
 
 
 struct node* create(struct node* head){
+	if(head!=NULL){
+		system("clear");
+		printf("head is not empty, please destroy it first\n");
+		sleep(2);
+		system("clear");
+		return NULL;
+	}
 	head=(struct node*)malloc(sizeof(struct node));
 	struct node* iter=head;
 	printf("Enter the number of elements you want to create: ");
@@ -100,12 +107,11 @@ void menu(struct node* head){
 			head=addend(head);
 			break;
 		case 6:
-
 			{
-				printf("Enter the data of element that you want to add after: ");
-				int data=0;
-				scanf("%d",&data);
-				head=addbetween(head,data);
+			printf("Enter the data of element that you want to add after: ");
+			int data=0;
+			scanf("%d",&data);
+			head=addbetween(head,data);
 			}
 			break;
 		case 7:
@@ -129,7 +135,7 @@ void menu(struct node* head){
 	}
 }
 struct node* addfront(struct node* head){
-	struct node *new=(struct node*)malloc(sizeof(struct node));
+	struct node *new=NULL;
 	new=create(new);
 	while(new->next!=NULL){
 		new=new->next;
@@ -142,8 +148,11 @@ struct node* addfront(struct node* head){
 	return new;
 }
 struct node* addend(struct node* head){
-	struct node *new=(struct node*)malloc(sizeof(struct node));
+	struct node *new=NULL;
 	new=create(new);
+	if(head==NULL){
+		return new;
+	}
 	while(head->next!=NULL)
 		head=head->next;
 	head->next=new;
@@ -153,54 +162,67 @@ struct node* addend(struct node* head){
 	return head;
 }
 struct node* addbetween(struct node* head,int data){
-	struct node *new=(struct node*)malloc(sizeof(struct node));
-	new=create(new);
-	while(head->data!=data){
-		head=head->next;
-		if(head==NULL){
+	if(head==NULL){
+		printf("List is empty\n");
+		sleep(2);
+		system("clear");
+		return head;
+	}
+	struct node*tmp=head;
+	while(tmp->data!=data){
+		if(tmp==NULL){
 			printf("data couldn't found\n");
-			while(head->prev==NULL)
-				head=head->prev;
+			sleep(2);
 			return head;
 		}
+		tmp=tmp->next;
 	}
-	new->prev=head;
-	head=head->next;
-	head->prev->next=new;
+	struct node *new=NULL;
+	new=create(new);
+	new->prev=tmp;
+	tmp=tmp->next;
+	tmp->prev->next=new;
 	while(new->next!=NULL)
 		new=new->next;
-	new->next=head;
-	head->prev=new;
-	while(head->prev!=NULL)
-		head=head->prev;
+	new->next=tmp;
+	tmp->prev=new;
 	return head;
 }
 struct node* delete(struct node* head,int data){
-	struct node* temp;
-	while(head->data!=data){
-		head=head->next;
-		if(head==NULL){
+	if(head==NULL){
+		printf("List is empty\n");
+		sleep(2);
+		system("clear");
+		return head;
+	}
+	struct node* tmp=head;
+	while(tmp->data!=data){
+		tmp=tmp->next;
+		if(tmp==NULL){
 			printf("data couldn't found\n");
-			while(head->prev!=NULL)
-				head=head->prev;
+			sleep(2);
+			system("clear");
 			return head;
 		}
 	}
-	temp=head;
-	while(head->prev!=NULL)
-		head=head->prev;
-	if(temp->prev!=NULL)
-		temp->prev->next=temp->next;
-	if(temp->next!=NULL)
-		temp->next->prev=temp->prev;
-	free(temp);
-	if(temp==head)
+	struct node* delete=tmp;
+	if(delete->prev!=NULL)
+		tmp->prev->next=tmp->next;
+	if(delete->next!=NULL)
+		tmp->next->prev=tmp->prev;
+	if(delete==head)
 		head=NULL;
+	else
+		free(tmp);
 	return head;
 }
 struct node* destroy(struct node* head){
-	if(head==NULL)
+	if(head==NULL){
+		printf("List is empty, already\n");
+		sleep(2);
+		system("clear");
 		return head;
+	}
 	struct node* temp=head;
 	while(head->next!=NULL){
 		head=head->next;
