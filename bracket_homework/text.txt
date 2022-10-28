@@ -37,7 +37,7 @@ int pop(stack *stk){
 	}
 	return -100;
 }
-int main(){
+int main){
 	stack test;
 	init(&test);
 	push(&test,4);

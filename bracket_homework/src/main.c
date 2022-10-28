@@ -45,7 +45,7 @@ void push(char c,stack* stk){
 			printf("%c%c\n",popSystem(stk),c);
 			break;
 		}else{
-			printf("Expected: %c\n",stk->data[stk->top]);
+			printf("Expected: )\n");
 			return;
 		}
 	case ']':
@@ -53,7 +53,7 @@ void push(char c,stack* stk){
 				printf("%c%c\n",popSystem(stk),c);
 				break;
 			}else{
-				printf("Expected: %c\n",stk->data[stk->top]);
+				printf("Expected: ]\n");
 				return;
 			}
 	case '}':
@@ -61,7 +61,7 @@ void push(char c,stack* stk){
 				printf("%c%c\n",popSystem(stk),c);
 				break;
 			}else{
-				printf("Expected: %c\n",stk->data[stk->top]);
+				printf("Expected: }\n");
 				return;
 			}
 	default :
@@ -77,6 +77,6 @@ int main(){
 		push(c,&n);
 	}while(c!=EOF);
 	if(n.top!=0)
-		printf("Ther is unclosed %c bracket",n.data[n.top]);
+		printf("There is unclosed %c bracket",n.data[n.top]);
 }
 
